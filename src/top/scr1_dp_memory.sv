@@ -79,6 +79,14 @@ localparam int unsigned RAM_SIZE_WORDS = SCR1_SIZE/SCR1_NBYTES;
  `else  // ASIC or SIMULATION
 logic  [SCR1_WIDTH-1:0]  ram_block  [RAM_SIZE_WORDS-1:0];
  `endif
+
+string filename;
+initial begin
+    if ($value$plusargs("SCR1_TCM_PROGRAM=%s", filename)) begin
+        $display("SCR1 Loading memory from: %s", filename);
+        $readmemh(filename, ram_block);
+    end
+end
 //-------------------------------------------------------------------------------
 // Port A memory behavioral description
 //-------------------------------------------------------------------------------
